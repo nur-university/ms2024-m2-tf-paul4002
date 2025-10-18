@@ -1,0 +1,56 @@
+package edu.nur.nurtricenter_appointment.webapi.controllers;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import an.awesome.pipelinr.Pipeline;
+import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.AppointmentDto;
+import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.AttendAppointmentCommand;
+import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.RequestAttendAppointmentDto;
+import edu.nur.nurtricenter_appointment.application.appointments.cancelAppointment.CancelAppointmentCommand;
+import edu.nur.nurtricenter_appointment.application.appointments.notAttendedAppointment.NotAttendedAppointmentCommand;
+import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ResponseAppointmentDto;
+import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ScheduleAppointmentCommand;
+import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ScheduleAppointmentDto;
+import edu.nur.nurtricenter_appointment.application.utils.ResponseAppointmentMapper;
+
+
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+@RestController
+@RequestMapping("/api/appointment")
+public class AppointmentController {
+  private final  Pipeline pipeline;
+
+  public AppointmentController(Pipeline pipeline) {
+    this.pipeline = pipeline;
+  }
+
+  @PostMapping("/schedule")
+  public ResponseAppointmentDto scheduleAppointment(@RequestBody ScheduleAppointmentDto scheduleAppointmentDto) {
+    ScheduleAppointmentCommand scheduleAppointmentCommand = new ScheduleAppointmentCommand(ResponseAppointmentMapper.from(scheduleAppointmentDto));
+    return scheduleAppointmentCommand.execute(pipeline);
+  }
+  
+  @PatchMapping("/cancel/{id}")
+  public ResponseAppointmentDto cancelAppointment(@PathVariable String id) {
+    CancelAppointmentCommand cancelAppointmentCommand = new CancelAppointmentCommand(new ResponseAppointmentDto(id));
+    return cancelAppointmentCommand.execute(pipeline);
+  }
+
+  @PatchMapping("/notattended/{id}")
+  public ResponseAppointmentDto notAttendedAppointment(@PathVariable String id) {
+    NotAttendedAppointmentCommand notAttendedAppointmentCommand = new NotAttendedAppointmentCommand(new ResponseAppointmentDto(id));
+    return notAttendedAppointmentCommand.execute(pipeline);
+  }
+
+  @PostMapping("/attend")
+  public AppointmentDto attend(@RequestBody RequestAttendAppointmentDto appointmentDto) {
+    AttendAppointmentCommand attendAppointmentCommand = new AttendAppointmentCommand(appointmentDto);
+    return attendAppointmentCommand.execute(pipeline);
+  }
+}
