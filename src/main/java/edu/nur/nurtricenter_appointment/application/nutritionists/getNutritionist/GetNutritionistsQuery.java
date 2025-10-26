@@ -3,7 +3,8 @@ package edu.nur.nurtricenter_appointment.application.nutritionists.getNutritioni
 import java.util.List;
 
 import an.awesome.pipelinr.Command;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
-public class GetNutritionistsQuery implements Command<List<NutritionistDto>> {
+public class GetNutritionistsQuery implements Command<ResultWithValue<List<NutritionistDto>>> {
   public GetNutritionistsQuery() {}
 }

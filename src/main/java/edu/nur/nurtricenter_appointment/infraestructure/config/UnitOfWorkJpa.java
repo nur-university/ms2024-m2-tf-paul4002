@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter_appointment.webapi.config;
+package edu.nur.nurtricenter_appointment.infraestructure.config;
 
 import java.util.concurrent.CompletableFuture;
 

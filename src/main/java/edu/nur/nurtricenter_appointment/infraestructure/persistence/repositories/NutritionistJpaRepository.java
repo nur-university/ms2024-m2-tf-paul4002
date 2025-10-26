@@ -1,6 +1,7 @@
 package edu.nur.nurtricenter_appointment.infraestructure.persistence.repositories;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,12 +22,13 @@ public class NutritionistJpaRepository implements INutritionistRepository {
 
   @Override
   public List<Nutritionist> getAll() {
-    List<NutritionistPersistenceModel> nutritionistModels = Streamable
-      .of(nutritionistCrudRepository.findAll())
-      .toList();
-    List<Nutritionist> nutritionists = new ArrayList<>();
-    nutritionistModels.forEach((nutritionistModel) -> nutritionists.add(NutritionistUtils.persistenceModelToNutritionist(nutritionistModel)));
-    return nutritionists;
+    // List<NutritionistPersistenceModel> nutritionistModels = Streamable
+    //   .of(nutritionistCrudRepository.findAll())
+    //   .toList();
+    // List<Nutritionist> nutritionists = new ArrayList<>();
+    // nutritionistModels.forEach((nutritionistModel) -> nutritionists.add(NutritionistUtils.persistenceModelToNutritionist(nutritionistModel)));
+    // return nutritionists;
+    return new LinkedList<>();
   }
 
   @Override

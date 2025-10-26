@@ -14,6 +14,7 @@ import edu.nur.nurtricenter_appointment.application.nutritionists.createNutritio
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.GetNutritionistsQuery;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
 import edu.nur.nurtricenter_appointment.application.utils.NutritionistMapper;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
 @RestController
 @RequestMapping("/api/nutritionist")
@@ -26,7 +27,7 @@ public class NutritionistController {
   }
 
   @GetMapping
-  public List<NutritionistDto> getNutritionist() {
+  public ResultWithValue<List<NutritionistDto>> getNutritionist() {
     GetNutritionistsQuery query = new GetNutritionistsQuery();
     return query.execute(pipeline);
   }
