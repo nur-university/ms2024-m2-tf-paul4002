@@ -26,7 +26,7 @@ public class NutritionistJpaRepository implements INutritionistRepository {
   @Override
   public void Delete(Nutritionist nutritionist) {
     NutritionistEntity entity = NutritionistEntity.fromDomain(nutritionist);
-    this.nutritionistEntityRepository.delete(entity);
+    this.nutritionistEntityRepository.deactivateById(entity.getId());
   }
 
   @Override
@@ -40,6 +40,4 @@ public class NutritionistJpaRepository implements INutritionistRepository {
     NutritionistEntity entity = NutritionistEntity.fromDomain(nutritionist);
     this.nutritionistEntityRepository.save(entity);
   }
-
-  
 }

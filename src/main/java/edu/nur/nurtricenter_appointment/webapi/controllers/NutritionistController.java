@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter_appointment.application.nutritionists.createNutritionist.CreateNutritionistCommand;
+import edu.nur.nurtricenter_appointment.application.nutritionists.deleteNutritionist.DeleteNutritionistCommand;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.GetNutritionistsQuery;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
 import edu.nur.nurtricenter_appointment.application.nutritionists.updateNutritionist.UpdateNutritionistCommand;
@@ -43,6 +45,11 @@ public class NutritionistController {
 
   @PutMapping
   public ResultWithValue<Boolean> updateNutritionist(@RequestBody UpdateNutritionistCommand command) {
-      return command.execute(pipeline);
+    return command.execute(pipeline);
+  }
+
+  @DeleteMapping
+  public ResultWithValue<Boolean> deleteNutritionist(@RequestBody DeleteNutritionistCommand command) {
+    return command.execute(pipeline);
   }
 }

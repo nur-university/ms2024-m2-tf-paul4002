@@ -5,7 +5,7 @@ import java.util.UUID;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.Nutritionist;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.NutritionistSpecialty;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.converters.NutritionistSpecialtyConverter;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.NutritionistPersistenceModel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +21,8 @@ public class NutritionistEntity {
   @Convert(converter = NutritionistSpecialtyConverter.class)
   private NutritionistSpecialty specialty;
   private String professionalLicense;
+  @Column(columnDefinition = "boolean default true")
+  private Boolean state;
 
   public UUID getId() {
     return id;
@@ -52,6 +54,12 @@ public class NutritionistEntity {
   public void setProfessionalLicense(String professionalLicense) {
     this.professionalLicense = professionalLicense;
   }
+  public Boolean getState() {
+    return state;
+  }
+  public void setState(Boolean state) {
+    this.state = state;
+  }
 
   public static NutritionistEntity fromDomain(Nutritionist nutritionist) {
     NutritionistEntity nutritionistEntity = new NutritionistEntity();
@@ -60,6 +68,7 @@ public class NutritionistEntity {
     nutritionistEntity.lastname = nutritionist.getLastname();
     nutritionistEntity.specialty = nutritionist.getSpecialty();
     nutritionistEntity.professionalLicense = nutritionist.getProfessionalLicense();
+    nutritionistEntity.state = true;
     return nutritionistEntity;
   }
 
