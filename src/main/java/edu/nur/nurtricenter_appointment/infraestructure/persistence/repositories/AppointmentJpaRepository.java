@@ -1,5 +1,6 @@
 package edu.nur.nurtricenter_appointment.infraestructure.persistence.repositories;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ import edu.nur.nurtricenter_appointment.infraestructure.persistence.utils.Appoin
 public class AppointmentJpaRepository implements IAppointmentRepository {
   @Autowired
   private AppointmentCrudRepository appointmentCrudRepository;
+
+  @Override
+  public boolean existsAppointmentNearTime(UUID nutritionistId, LocalDateTime start, LocalDateTime end) {
+    return this.appointmentCrudRepository.existsAppointmentNearTime(nutritionistId, start, end);
+  }
 
   @Override
   public UUID add(Appointment appointment) {

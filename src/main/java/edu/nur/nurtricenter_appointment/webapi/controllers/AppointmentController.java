@@ -11,9 +11,9 @@ import edu.nur.nurtricenter_appointment.application.appointments.cancelAppointme
 import edu.nur.nurtricenter_appointment.application.appointments.notAttendedAppointment.NotAttendedAppointmentCommand;
 import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ResponseAppointmentDto;
 import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ScheduleAppointmentCommand;
-import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ScheduleAppointmentDto;
-import edu.nur.nurtricenter_appointment.application.utils.ResponseAppointmentMapper;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,9 +31,8 @@ public class AppointmentController {
   }
 
   @PostMapping("/schedule")
-  public ResponseAppointmentDto scheduleAppointment(@RequestBody ScheduleAppointmentDto scheduleAppointmentDto) {
-    ScheduleAppointmentCommand scheduleAppointmentCommand = new ScheduleAppointmentCommand(ResponseAppointmentMapper.from(scheduleAppointmentDto));
-    return scheduleAppointmentCommand.execute(pipeline);
+  public ResultWithValue<UUID> scheduleAppointment(@RequestBody ScheduleAppointmentCommand command) {
+    return command.execute(pipeline);
   }
   
   @PatchMapping("/cancel/{id}")

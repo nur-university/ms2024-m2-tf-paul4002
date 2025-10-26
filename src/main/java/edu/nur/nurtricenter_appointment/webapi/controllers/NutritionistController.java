@@ -3,8 +3,6 @@ package edu.nur.nurtricenter_appointment.webapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +15,11 @@ import edu.nur.nurtricenter_appointment.application.nutritionists.createNutritio
 import edu.nur.nurtricenter_appointment.application.nutritionists.deleteNutritionist.DeleteNutritionistCommand;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.GetNutritionistsQuery;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
+import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionistAppointmentsScheduledByDate.GetNutritionistAppointmentsScheduledByDateQuery;
+import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionistAppointmentsScheduledByDate.ScheduledAppointmentNutritionistDto;
 import edu.nur.nurtricenter_appointment.application.nutritionists.updateNutritionist.UpdateNutritionistCommand;
 import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -51,5 +52,10 @@ public class NutritionistController {
   @DeleteMapping
   public ResultWithValue<Boolean> deleteNutritionist(@RequestBody DeleteNutritionistCommand command) {
     return command.execute(pipeline);
+  }
+
+  @PostMapping("/appointments")
+  public ResultWithValue<List<ScheduledAppointmentNutritionistDto>> getAppointmentsByDate(@RequestBody GetNutritionistAppointmentsScheduledByDateQuery query) {
+    return query.execute(pipeline);
   }
 }
