@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.nur.nurtricenter_appointment.domain.mealplans.IMealPlanRepository;
 import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.MealPlanPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.MealPlanPersistenceModel;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.utils.MealPlanUtils;
 
 @Repository

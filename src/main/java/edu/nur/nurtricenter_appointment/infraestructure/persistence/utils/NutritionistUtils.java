@@ -2,7 +2,7 @@ package edu.nur.nurtricenter_appointment.infraestructure.persistence.utils;
 
 import edu.nur.nurtricenter_appointment.domain.nutritionists.Nutritionist;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.NutritionistSpecialty;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.NutritionistPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.NutritionistPersistenceModel;
 
 public class NutritionistUtils {
   public static Nutritionist persistenceModelToNutritionist(NutritionistPersistenceModel nutritionistModel) {

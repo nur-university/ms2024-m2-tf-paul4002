@@ -1,12 +1,9 @@
 package edu.nur.nurtricenter_appointment.application.nutritionists.createNutritionist;
 
+import java.util.UUID;
+
 import an.awesome.pipelinr.Command;
-import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
-public class CreateNutritionistCommand implements Command<NutritionistDto> {
-  NutritionistDto nutritionistDto;
-
-  public CreateNutritionistCommand(NutritionistDto nutritionistDto) {
-    this.nutritionistDto = nutritionistDto;
-  }
+public record CreateNutritionistCommand(String name, String lastname, String specialty, String professionalLicense) implements Command<ResultWithValue<UUID>> {
 }

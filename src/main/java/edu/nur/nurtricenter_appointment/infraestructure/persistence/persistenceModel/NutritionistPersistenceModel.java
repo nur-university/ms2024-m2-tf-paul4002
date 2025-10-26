@@ -1,4 +1,4 @@
-package edu.nur.nurtricenter_appointment.infraestructure.persistence.model;
+package edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel;
 
 import java.util.UUID;
 

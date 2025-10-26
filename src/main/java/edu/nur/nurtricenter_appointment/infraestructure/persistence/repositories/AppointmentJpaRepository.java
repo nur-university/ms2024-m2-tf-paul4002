@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.nur.nurtricenter_appointment.domain.appointments.Appointment;
 import edu.nur.nurtricenter_appointment.domain.appointments.IAppointmentRepository;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.AppointmentPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.AppointmentPersistenceModel;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.utils.AppointmentUtils;
 
 @Repository

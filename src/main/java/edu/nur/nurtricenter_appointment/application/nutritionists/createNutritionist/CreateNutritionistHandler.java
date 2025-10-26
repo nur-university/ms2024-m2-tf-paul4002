@@ -1,17 +1,18 @@
 package edu.nur.nurtricenter_appointment.application.nutritionists.createNutritionist;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Component;
 
 import an.awesome.pipelinr.Command;
-import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
-import edu.nur.nurtricenter_appointment.application.utils.NutritionistMapper;
 import edu.nur.nurtricenter_appointment.core.abstractions.IUnitOfWork;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.INutritionistRepository;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.Nutritionist;
 import edu.nur.nurtricenter_appointment.domain.nutritionists.NutritionistSpecialty;
 
 @Component
-public class CreateNutritionistHandler implements Command.Handler<CreateNutritionistCommand, NutritionistDto> {
+public class CreateNutritionistHandler implements Command.Handler<CreateNutritionistCommand, ResultWithValue<UUID>> {
   private final INutritionistRepository nutritionistRepository;
   private final IUnitOfWork unitOfWork;
 
@@ -21,15 +22,15 @@ public class CreateNutritionistHandler implements Command.Handler<CreateNutritio
   }
 
   @Override
-  public NutritionistDto handle(CreateNutritionistCommand request) {
-    NutritionistDto nutritionistDto = request.nutritionistDto;
+  public ResultWithValue<UUID> handle(CreateNutritionistCommand request) {
     Nutritionist nutritionist = new Nutritionist(
-      nutritionistDto.name, 
-      nutritionistDto.lastname, 
-      NutritionistSpecialty.fromLabel(nutritionistDto.specialty), 
-      nutritionistDto.professionalLicense);
-    this.nutritionistRepository.Add(nutritionist);
+        request.name(), 
+        request.lastname(), 
+        NutritionistSpecialty.fromLabel(request.specialty()), 
+        request.professionalLicense()
+      );
+    this.nutritionistRepository.Add(nutritionist)  ;
     this.unitOfWork.commitAsync();
-    return NutritionistMapper.from(nutritionist);
+    return ResultWithValue.success(nutritionist.getId());
   }
 }

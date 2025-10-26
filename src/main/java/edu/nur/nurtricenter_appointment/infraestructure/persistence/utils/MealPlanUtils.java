@@ -2,8 +2,8 @@ package edu.nur.nurtricenter_appointment.infraestructure.persistence.utils;
 
 import edu.nur.nurtricenter_appointment.domain.meal.Meal;
 import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.MealPersistenceModel;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.MealPlanPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.MealPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.MealPlanPersistenceModel;
 
 public class MealPlanUtils {
   public static MealPlanPersistenceModel mealPlanToPersistenceModel(MealPlan mealPlan) {

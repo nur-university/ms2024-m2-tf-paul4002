@@ -1,6 +1,7 @@
 package edu.nur.nurtricenter_appointment.webapi.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import an.awesome.pipelinr.Pipeline;
 import edu.nur.nurtricenter_appointment.application.nutritionists.createNutritionist.CreateNutritionistCommand;
-import edu.nur.nurtricenter_appointment.application.nutritionists.createNutritionist.NewNutritionistDto;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.GetNutritionistsQuery;
 import edu.nur.nurtricenter_appointment.application.nutritionists.getNutritionist.NutritionistDto;
-import edu.nur.nurtricenter_appointment.application.utils.NutritionistMapper;
 import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
 @RestController
@@ -33,8 +32,7 @@ public class NutritionistController {
   }
 
   @PostMapping
-  public NutritionistDto createNutritionist(@RequestBody NewNutritionistDto nutritionistDto) {
-    CreateNutritionistCommand createNutritionistCommand = new CreateNutritionistCommand(NutritionistMapper.from(nutritionistDto));
+  public ResultWithValue<UUID> createNutritionist(@RequestBody CreateNutritionistCommand createNutritionistCommand) {
     return createNutritionistCommand.execute(pipeline);
   }
 }

@@ -12,13 +12,6 @@ public class NutritionistDto {
   public NutritionistDto() {
   }
 
-  public NutritionistDto(String name, String lastname, String specialty, String professionalLicense) {
-    this.name = name;
-    this.lastname = lastname;
-    this.specialty = specialty;
-    this.professionalLicense = professionalLicense;
-  }
-
   public NutritionistDto(UUID id, String name, String lastname, String specialty, String professionalLicense) {
     this.id = id;
     this.name = name;

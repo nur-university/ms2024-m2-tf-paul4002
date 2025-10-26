@@ -8,8 +8,8 @@ import edu.nur.nurtricenter_appointment.domain.appointments.AppointmentStatus;
 import edu.nur.nurtricenter_appointment.domain.appointments.AppointmentType;
 import edu.nur.nurtricenter_appointment.domain.appointments.Measurement;
 import edu.nur.nurtricenter_appointment.domain.diagnosis.Diagnosis;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.AppointmentPersistenceModel;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.DiagnosisPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.AppointmentPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.DiagnosisPersistenceModel;
 
 public class AppointmentUtils {
   public static AppointmentPersistenceModel appointmentToPersistenceModel(Appointment appointment) {

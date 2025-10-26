@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.model.MealPlanPersistenceModel;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.MealPlanPersistenceModel;
 
 public interface MealPlanCrudRepository extends CrudRepository<MealPlanPersistenceModel, UUID> {
 
