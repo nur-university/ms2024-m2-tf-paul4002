@@ -62,4 +62,8 @@ public class NutritionistEntity {
     nutritionistEntity.professionalLicense = nutritionist.getProfessionalLicense();
     return nutritionistEntity;
   }
+
+  public Nutritionist toDomain() {
+    return new Nutritionist(id, name, lastname, specialty, professionalLicense);
+  }
 }

@@ -4,21 +4,15 @@ public class ResultWithValue<T> extends Result {
 
     private final T value;
 
-    protected ResultWithValue(T value, boolean isSuccess, Error error) {
+    public ResultWithValue(T value, boolean isSuccess, Error error) {
         super(isSuccess, error);
         this.value = value;
     }
 
     public T getValue() {
-        if (isFailure()) {
-            throw new IllegalStateException(
-                "The value of a failure result can't be accessed."
-            );
-        }
         return value;
     }
 
-    // Conversión implícita equivalente: value -> ResultWithValue
     public static <T> ResultWithValue<T> of(T value) {
         if (value != null) {
             return Result.success(value);

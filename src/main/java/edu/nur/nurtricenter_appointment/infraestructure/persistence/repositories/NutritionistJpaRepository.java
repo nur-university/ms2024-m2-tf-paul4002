@@ -1,5 +1,6 @@
 package edu.nur.nurtricenter_appointment.infraestructure.persistence.repositories;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,24 @@ public class NutritionistJpaRepository implements INutritionistRepository {
     NutritionistEntity entity = NutritionistEntity.fromDomain(nutritionist);
     this.nutritionistEntityRepository.save(entity);
     return nutritionist.getId();
+  }
+
+  @Override
+  public void Delete(Nutritionist nutritionist) {
+    NutritionistEntity entity = NutritionistEntity.fromDomain(nutritionist);
+    this.nutritionistEntityRepository.delete(entity);
+  }
+
+  @Override
+  public Nutritionist GetById(UUID id) {
+    Optional<NutritionistEntity> entity = this.nutritionistEntityRepository.findById(id);
+    return entity.map(NutritionistEntity::toDomain).orElse(null);
+  }
+
+  @Override
+  public void Update(Nutritionist nutritionist) {
+    NutritionistEntity entity = NutritionistEntity.fromDomain(nutritionist);
+    this.nutritionistEntityRepository.save(entity);
   }
 
   
