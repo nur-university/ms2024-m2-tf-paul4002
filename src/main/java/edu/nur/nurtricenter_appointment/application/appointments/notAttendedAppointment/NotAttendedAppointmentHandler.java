@@ -1,12 +1,8 @@
 package edu.nur.nurtricenter_appointment.application.appointments.notAttendedAppointment;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import an.awesome.pipelinr.Command;
-// import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ResponseAppointmentDto;
-// import edu.nur.nurtricenter_appointment.application.utils.ResponseAppointmentMapper;
 import edu.nur.nurtricenter_appointment.core.abstractions.IUnitOfWork;
 import edu.nur.nurtricenter_appointment.core.results.DomainException;
 import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
@@ -38,14 +34,4 @@ public class NotAttendedAppointmentHandler implements Command.Handler<NotAttende
     this.unitOfWork.commitAsync();
     return ResultWithValue.success(true);
   }
-
-  
-
-  // @Override
-  // public ResultWithValue<Boolean> handle(NotAttendedAppointmentCommand request) {
-  //   Appointment appointment = new Appointment(UUID.fromString(request.id()));
-  //   // appointment = this.appointmentRepository.notAttended(appointment.getId());
-  //   this.unitOfWork.commitAsync();
-  //   return ResponseAppointmentMapper.from(appointment);
-  // }
 }
