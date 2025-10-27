@@ -1,48 +1,47 @@
 package edu.nur.nurtricenter_appointment.application.appointments.attendAppointment;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import an.awesome.pipelinr.Command;
-import edu.nur.nurtricenter_appointment.application.utils.AppointmentMapper;
 import edu.nur.nurtricenter_appointment.application.utils.DiagnosisMapper;
 import edu.nur.nurtricenter_appointment.application.utils.MealPlanMapper;
 import edu.nur.nurtricenter_appointment.application.utils.MeasurementMapper;
-import edu.nur.nurtricenter_appointment.core.abstractions.IUnitOfWork;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 import edu.nur.nurtricenter_appointment.domain.appointments.Appointment;
 import edu.nur.nurtricenter_appointment.domain.appointments.IAppointmentRepository;
-import edu.nur.nurtricenter_appointment.domain.mealplans.IMealPlanRepository;
-import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
+import edu.nur.nurtricenter_appointment.infraestructure.config.UnitOfWorkJpa;
+import edu.nur.nurtricenter_appointment.core.results.DomainException;
+import edu.nur.nurtricenter_appointment.core.results.Error;
 
 @Component
-public class AttendAppointmentHandler implements Command.Handler<AttendAppointmentCommand, AppointmentDto> {
+public class AttendAppointmentHandler implements Command.Handler<AttendAppointmentCommand, ResultWithValue<Boolean>> {
   private final IAppointmentRepository appointmentRepository;
-  private final IMealPlanRepository mealPlanRepository;
-  private final IUnitOfWork unitOfWork;
-  
+  private final UnitOfWorkJpa unitOfWork;
   
 
-  public AttendAppointmentHandler(IAppointmentRepository appointmentRepository, IMealPlanRepository mealPlanRepository,
-      IUnitOfWork unitOfWork) {
+  public AttendAppointmentHandler(IAppointmentRepository appointmentRepository, UnitOfWorkJpa unitOfWork) {
     this.appointmentRepository = appointmentRepository;
-    this.mealPlanRepository = mealPlanRepository;
     this.unitOfWork = unitOfWork;
   }
 
   @Override
-  public AppointmentDto handle(AttendAppointmentCommand request) {
-    RequestAttendAppointmentDto appointmentDto = request.requestAttendAppointmentDto;
-    Appointment appointment = this.appointmentRepository.GetById(UUID.fromString(appointmentDto.id));
+  public ResultWithValue<Boolean> handle(AttendAppointmentCommand request) {
+    Appointment appointment = this.appointmentRepository.GetById(request.id());
+    if (appointment == null) return ResultWithValue.failure(Error.notFound("Appointment.NotFound", "The appointment was not found", request.id().toString()));
+    try {
     appointment.attend(
-      appointmentDto.notes, 
-      MeasurementMapper.from(appointmentDto.measurementDto), 
-      DiagnosisMapper.from(appointmentDto.diagnosisDto));
-    // this.appointmentRepository.attend(appointment);
-    MealPlan mealPlan = MealPlanMapper.from(request.requestAttendAppointmentDto.mealPlanDto);
-    mealPlan.setAppointmentId(appointment.getId());
-    this.mealPlanRepository.add(mealPlan);
+      request.notes(), 
+      MeasurementMapper.from(request.measurementDto()), 
+      DiagnosisMapper.from(request.diagnosisDto()),
+      MealPlanMapper.from(request.mealPlanDto())
+    );
+    } catch(DomainException e) {
+      Error err = e.getError();
+      return ResultWithValue.failure(Error.failure(err.getCode(), err.getStructuredMessage(), request.id().toString()));
+    }
+    this.appointmentRepository.update(appointment);
+    this.unitOfWork.register(appointment);
     this.unitOfWork.commitAsync();
-    return AppointmentMapper.from(appointment);
+    return ResultWithValue.success(true);
   }
 }

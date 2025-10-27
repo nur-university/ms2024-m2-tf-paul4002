@@ -1,8 +1,11 @@
 package edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
+import edu.nur.nurtricenter_appointment.core.abstractions.DomainEvent;
 import edu.nur.nurtricenter_appointment.domain.appointments.Appointment;
 import edu.nur.nurtricenter_appointment.domain.appointments.AppointmentAttendance;
 import edu.nur.nurtricenter_appointment.domain.appointments.AppointmentStatus;
@@ -11,11 +14,15 @@ import edu.nur.nurtricenter_appointment.domain.appointments.Measurement;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.converters.AppointmentAttendanceConverter;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.converters.AppointmentStatusConverter;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.converters.AppointmentTypeConverter;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "appointments")
@@ -36,6 +43,13 @@ public class AppointmentEntity {
   private String notes;
   @Embedded
   private MeasurementEntity measurement;
+  
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "diagnosis_id")
+  private DiagnosisEntity diagnosis;
+
+  @Transient
+  private List<DomainEvent> domainEvents = new LinkedList<>();
 
   public UUID getId() {
     return id;
@@ -104,6 +118,23 @@ public class AppointmentEntity {
     this.measurement = meausrement;
   }
 
+  public DiagnosisEntity getDiagnosis() {
+    return diagnosis;
+  }
+  public void setDiagnosis(DiagnosisEntity diagnosis) {
+    this.diagnosis = diagnosis;
+  }
+  public List<DomainEvent> getDomainEvents() {
+    return domainEvents;
+  }
+  public void setDomainEvents(List<DomainEvent> domainEvents) {
+    this.domainEvents = domainEvents;
+  }
+
+  public void clearDomainEvents() {
+    this.domainEvents = new LinkedList<>();
+  }
+
   public static AppointmentEntity fromDomain(Appointment appointment) {
     AppointmentEntity appointmentEntity = new AppointmentEntity();
     appointmentEntity.id = appointment.getId();
@@ -116,6 +147,7 @@ public class AppointmentEntity {
     appointmentEntity.status = appointment.getStatus();
     appointmentEntity.attendance = appointment.getAttendance();
     appointmentEntity.notes = appointment.getNotes();
+    appointmentEntity.domainEvents = appointment.getDomainEvents();
     if (appointment.getMeasurement() != null) {
       MeasurementEntity measurementEntity = new MeasurementEntity();
       Measurement measurement = appointment.getMeasurement();
@@ -125,6 +157,10 @@ public class AppointmentEntity {
       measurementEntity.setBodyFat(measurement.getBodyFat());
       measurementEntity.setMuscleMass(measurement.getMuscleMass());
       appointmentEntity.measurement = measurementEntity;
+    }
+    if (appointment.getDiagnosis() != null) {
+      DiagnosisEntity diagnosisEntity = DiagnosisEntity.fromDomain(appointment.getDiagnosis());
+      appointmentEntity.diagnosis = diagnosisEntity;
     }
     return appointmentEntity;
   }

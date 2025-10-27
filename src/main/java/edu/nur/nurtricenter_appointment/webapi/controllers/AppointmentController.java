@@ -4,19 +4,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import an.awesome.pipelinr.Pipeline;
-import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.AppointmentDto;
 import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.AttendAppointmentCommand;
-import edu.nur.nurtricenter_appointment.application.appointments.attendAppointment.RequestAttendAppointmentDto;
 import edu.nur.nurtricenter_appointment.application.appointments.cancelAppointment.CancelAppointmentCommand;
 import edu.nur.nurtricenter_appointment.application.appointments.notAttendedAppointment.NotAttendedAppointmentCommand;
-import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ResponseAppointmentDto;
 import edu.nur.nurtricenter_appointment.application.appointments.scheduleAppointment.ScheduleAppointmentCommand;
 import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -46,8 +42,7 @@ public class AppointmentController {
   }
 
   @PostMapping("/attend")
-  public AppointmentDto attend(@RequestBody RequestAttendAppointmentDto appointmentDto) {
-    AttendAppointmentCommand attendAppointmentCommand = new AttendAppointmentCommand(appointmentDto);
-    return attendAppointmentCommand.execute(pipeline);
+  public ResultWithValue<Boolean> attend(@RequestBody AttendAppointmentCommand command) {
+    return command.execute(pipeline);
   }
 }

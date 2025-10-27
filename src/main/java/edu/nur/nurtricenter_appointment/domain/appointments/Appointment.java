@@ -3,8 +3,9 @@ package edu.nur.nurtricenter_appointment.domain.appointments;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import edu.nur.nurtricenter_appointment.domain.appointments.events.AppointmentAttendedEvent;
 import edu.nur.nurtricenter_appointment.domain.diagnosis.Diagnosis;
-
+import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
 import edu.nur.nurtricenter_appointment.core.abstractions.AggregateRoot;
 import edu.nur.nurtricenter_appointment.core.results.DomainException;
 
@@ -69,7 +70,7 @@ public class Appointment extends AggregateRoot {
     this.cancelDate = LocalDateTime.now();
   }
 
-  public void attend(String notes, Measurement measurement, Diagnosis diagnosis) {
+  public void attend(String notes, Measurement measurement, Diagnosis diagnosis, MealPlan mealPlan) {
     if (this.status != AppointmentStatus.SCHEDULED) {
       throw new DomainException(AppointmentErrors.StatusNotScheduled());
     } else if (this.attendance != AppointmentAttendance.PENDING) {
@@ -80,6 +81,7 @@ public class Appointment extends AggregateRoot {
     this.notes = notes;
     this.measurement = measurement;
     this.diagnosis = diagnosis;
+    this.addDomainEvent(new AppointmentAttendedEvent(id, mealPlan));
   }
 
   public void notAttended() {

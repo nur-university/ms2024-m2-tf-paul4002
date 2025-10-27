@@ -54,10 +54,6 @@ public class AppointmentPersistenceModel {
 
   private Double muscleMass;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "diagnosis_id")
-  private DiagnosisPersistenceModel diagnosis;
-
   public UUID getId() {
     return id;
   }
@@ -176,15 +172,5 @@ public class AppointmentPersistenceModel {
 
   public void setMuscleMass(Double muscleMass) {
     this.muscleMass = muscleMass;
-  }
-
-  public DiagnosisPersistenceModel getDiagnosis() {
-    return diagnosis;
-  }
-
-  public void setDiagnosis(DiagnosisPersistenceModel diagnosisPersistenceModel) {
-    this.diagnosis = diagnosisPersistenceModel;
-  }
-
-  
+  }  
 }

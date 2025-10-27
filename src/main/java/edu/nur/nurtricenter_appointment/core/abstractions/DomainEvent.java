@@ -3,7 +3,9 @@ package edu.nur.nurtricenter_appointment.core.abstractions;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public abstract class DomainEvent {
+import an.awesome.pipelinr.Notification;
+
+public abstract class DomainEvent implements Notification {
     private final UUID id;
     private final LocalDateTime occurredOn;
 

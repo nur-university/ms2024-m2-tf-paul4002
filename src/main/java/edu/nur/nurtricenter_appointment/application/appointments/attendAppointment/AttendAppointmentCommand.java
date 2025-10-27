@@ -1,11 +1,9 @@
 package edu.nur.nurtricenter_appointment.application.appointments.attendAppointment;
 
+import java.util.UUID;
+
 import an.awesome.pipelinr.Command;
+import edu.nur.nurtricenter_appointment.core.results.ResultWithValue;
 
-public class AttendAppointmentCommand implements Command<AppointmentDto> {
-  RequestAttendAppointmentDto requestAttendAppointmentDto;
-
-  public AttendAppointmentCommand(RequestAttendAppointmentDto requestAttendAppointmentDto) {
-    this.requestAttendAppointmentDto = requestAttendAppointmentDto;
-  }
+public record AttendAppointmentCommand(UUID id, String notes, MeasurementDto measurementDto, DiagnosisDto diagnosisDto, MealPlanDto mealPlanDto) implements Command<ResultWithValue<Boolean>> {
 }
