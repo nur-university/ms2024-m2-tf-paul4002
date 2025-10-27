@@ -1,7 +1,5 @@
 package edu.nur.nurtricenter_appointment.application.mealplans.eventHandlers;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import an.awesome.pipelinr.Notification;

@@ -7,18 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import edu.nur.nurtricenter_appointment.domain.mealplans.IMealPlanRepository;
 import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.MealPlanPersistenceModel;
-import edu.nur.nurtricenter_appointment.infraestructure.persistence.utils.MealPlanUtils;
+import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.MealPlanEntity;
 
 @Repository
 public class MealPlanJpaRepository implements IMealPlanRepository {
 
   @Autowired
-  MealPlanCrudRepository mealPlanCrudRepository;
+  MealPlanEntityRepository mealPlanEntityRepository;
 
   @Override
   public UUID add(MealPlan mealPlan) {
-    MealPlanPersistenceModel persistenceModel = MealPlanUtils.mealPlanToPersistenceModel(mealPlan);
-    return this.mealPlanCrudRepository.save(persistenceModel).getId();
+    MealPlanEntity entity = MealPlanEntity.fromDomain(mealPlan);
+    return this.mealPlanEntityRepository.save(entity).getId();
   }
 }

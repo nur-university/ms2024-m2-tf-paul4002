@@ -1,25 +1,25 @@
-package edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel;
+package edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.nur.nurtricenter_appointment.domain.meal.Meal;
+import edu.nur.nurtricenter_appointment.domain.mealplans.MealPlan;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mealplans")
-public class MealPlanPersistenceModel {
+public class MealPlanEntity {
 
   @Id
-  @GeneratedValue
   private UUID id;
 
   @Column(nullable = false)
@@ -41,7 +41,7 @@ public class MealPlanPersistenceModel {
     cascade = CascadeType.ALL,
     orphanRemoval = true
   )
-  private List<MealPersistenceModel> meals = new ArrayList<>();
+  private List<MealEntity> meals = new ArrayList<>();
 
   public UUID getId() {
     return id;
@@ -99,11 +99,32 @@ public class MealPlanPersistenceModel {
     this.appointmentId = appointmentId;
   }
 
-  public List<MealPersistenceModel> getMeals() {
+  public List<MealEntity> getMeals() {
     return meals;
   }
 
-  public void setMeals(List<MealPersistenceModel> meals) {
+  public void setMeals(List<MealEntity> meals) {
     this.meals = meals;
+  }
+
+  public static MealPlanEntity fromDomain(MealPlan mealPlan) {
+    MealPlanEntity mealPlanEntity = new MealPlanEntity();
+    mealPlanEntity.id = mealPlan.getId();
+    mealPlanEntity.generalDescripcion = mealPlan.getGeneralDescription();
+    mealPlanEntity.nutritionalGoal = mealPlan.getNutritionalGoal();
+    mealPlanEntity.startDate = mealPlan.getStartDate();
+    mealPlanEntity.endDate = mealPlan.getEndDate();
+    mealPlanEntity.restrictions = mealPlan.getRestrictions();
+    mealPlanEntity.appointmentId = mealPlan.getAppointmentId();
+    if (mealPlan.get_meals() != null) {
+      List<MealEntity> mealEntities = new LinkedList<>();
+      for(Meal meal : mealPlan.get_meals()) {
+        MealEntity mealEntity = MealEntity.fromDomain(meal);
+        mealEntity.setMealPlan(mealPlanEntity);
+        mealEntities.add(mealEntity);
+      }
+      mealPlanEntity.meals = mealEntities;
+    }
+    return mealPlanEntity;
   }
 }
