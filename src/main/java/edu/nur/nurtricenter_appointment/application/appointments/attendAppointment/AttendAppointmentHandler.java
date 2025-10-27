@@ -33,7 +33,7 @@ public class AttendAppointmentHandler implements Command.Handler<AttendAppointme
   @Override
   public AppointmentDto handle(AttendAppointmentCommand request) {
     RequestAttendAppointmentDto appointmentDto = request.requestAttendAppointmentDto;
-    Appointment appointment = this.appointmentRepository.find(UUID.fromString(appointmentDto.id));
+    Appointment appointment = this.appointmentRepository.GetById(UUID.fromString(appointmentDto.id));
     appointment.attend(
       appointmentDto.notes, 
       MeasurementMapper.from(appointmentDto.measurementDto), 

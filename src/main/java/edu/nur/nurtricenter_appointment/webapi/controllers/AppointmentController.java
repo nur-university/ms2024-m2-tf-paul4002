@@ -35,10 +35,11 @@ public class AppointmentController {
     return command.execute(pipeline);
   }
   
-  @PatchMapping("/cancel/{id}")
-  public ResponseAppointmentDto cancelAppointment(@PathVariable String id) {
-    CancelAppointmentCommand cancelAppointmentCommand = new CancelAppointmentCommand(new ResponseAppointmentDto(id));
-    return cancelAppointmentCommand.execute(pipeline);
+  @PatchMapping("/cancel")
+  public ResultWithValue<Boolean> cancelAppointment(@RequestBody CancelAppointmentCommand command) {
+    // CancelAppointmentCommand cancelAppointmentCommand = new CancelAppointmentCommand(new ResponseAppointmentDto(id));
+    // return cancelAppointmentCommand.execute(pipeline);
+    return command.execute(pipeline);
   }
 
   @PatchMapping("/notattended/{id}")

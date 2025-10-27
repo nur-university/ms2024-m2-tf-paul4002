@@ -41,8 +41,8 @@ public class ScheduleAppointmentHandler implements Command.Handler<ScheduleAppoi
       return ResultWithValue.failure(Error.notFound("Nutritionist.NotFound", "The nutritionist was not found", request.nutritionistId().toString()));
     if (request.scheduleDate().isBefore(LocalDateTime.now()))
       return ResultWithValue.failure(Error.notFound("Appointment.InvalidScheduleDate", "The appointment schedule date cannot be in the past", request.scheduleDate().toString()));
-    LocalDateTime start = request.scheduleDate().minusMinutes(30);
-    LocalDateTime end = request.scheduleDate().plusMinutes(30);
+    LocalDateTime start = request.scheduleDate().minusMinutes(29).plusSeconds(1);
+    LocalDateTime end = request.scheduleDate().plusMinutes(29).plusSeconds(59);
     boolean existsAppointmentNearTime = this.appointmentRepository.existsAppointmentNearTime(request.nutritionistId(), start, end);
     if (existsAppointmentNearTime) 
       return ResultWithValue.failure(Error.notFound("Appointment.InvalidScheduleDate", "The appointment schedule date is not valid, nutritionist is not available", request.scheduleDate().toString()));
