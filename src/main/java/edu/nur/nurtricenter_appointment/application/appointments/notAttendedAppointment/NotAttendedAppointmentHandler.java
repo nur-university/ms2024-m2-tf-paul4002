@@ -24,7 +24,7 @@ public class NotAttendedAppointmentHandler implements Command.Handler<NotAttende
   @Override
   public ResponseAppointmentDto handle(NotAttendedAppointmentCommand request) {
     Appointment appointment = new Appointment(UUID.fromString(request.responseAppointmentDto.id));
-    appointment = this.appointmentRepository.notAttended(appointment.getId());
+    // appointment = this.appointmentRepository.notAttended(appointment.getId());
     this.unitOfWork.commitAsync();
     return ResponseAppointmentMapper.from(appointment);
   }

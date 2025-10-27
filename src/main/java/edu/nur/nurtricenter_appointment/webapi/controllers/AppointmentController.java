@@ -37,8 +37,6 @@ public class AppointmentController {
   
   @PatchMapping("/cancel")
   public ResultWithValue<Boolean> cancelAppointment(@RequestBody CancelAppointmentCommand command) {
-    // CancelAppointmentCommand cancelAppointmentCommand = new CancelAppointmentCommand(new ResponseAppointmentDto(id));
-    // return cancelAppointmentCommand.execute(pipeline);
     return command.execute(pipeline);
   }
 

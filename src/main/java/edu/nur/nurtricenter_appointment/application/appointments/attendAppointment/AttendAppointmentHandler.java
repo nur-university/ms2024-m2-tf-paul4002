@@ -38,7 +38,7 @@ public class AttendAppointmentHandler implements Command.Handler<AttendAppointme
       appointmentDto.notes, 
       MeasurementMapper.from(appointmentDto.measurementDto), 
       DiagnosisMapper.from(appointmentDto.diagnosisDto));
-    this.appointmentRepository.attend(appointment);
+    // this.appointmentRepository.attend(appointment);
     MealPlan mealPlan = MealPlanMapper.from(request.requestAttendAppointmentDto.mealPlanDto);
     mealPlan.setAppointmentId(appointment.getId());
     this.mealPlanRepository.add(mealPlan);

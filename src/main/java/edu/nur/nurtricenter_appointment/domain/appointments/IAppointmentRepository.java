@@ -8,7 +8,4 @@ public interface IAppointmentRepository {
   UUID add(Appointment appointment);
   Appointment GetById(UUID id);
   void update(Appointment appointment);
-  UUID attend(Appointment appointment);
-  Appointment cancel(UUID id);
-  Appointment notAttended(UUID id);
 }

@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 import edu.nur.nurtricenter_appointment.domain.appointments.Appointment;
 import edu.nur.nurtricenter_appointment.domain.appointments.IAppointmentRepository;
 import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.AppointmentEntity;
-// import edu.nur.nurtricenter_appointment.infraestructure.persistence.persistenceModel.AppointmentPersistenceModel;
-// import edu.nur.nurtricenter_appointment.infraestructure.persistence.utils.AppointmentUtils;
-// import edu.nur.nurtricenter_appointment.infraestructure.persistence.domainModel.NutritionistEntity;
 
 @Repository
 public class AppointmentJpaRepository implements IAppointmentRepository {
@@ -41,36 +38,5 @@ public class AppointmentJpaRepository implements IAppointmentRepository {
   public Appointment GetById(UUID id) {
     Optional<AppointmentEntity> entity = this.appointmentEntityRepository.findById(id);
     return entity.map(AppointmentEntity::toDomain).orElse(null);
-  }
-
-  @Override
-  public Appointment cancel(UUID id) {
-    // AppointmentPersistenceModel appointmentPersistenceModel = this.appointmentCrudRepository.findById(id).orElse(null);
-    // Appointment appointment = AppointmentUtils.persistenceModelToAppointment(appointmentPersistenceModel);
-    // appointment.cancel();
-    // appointmentPersistenceModel = AppointmentUtils.appointmentToPersistenceModel(appointment);
-    // this.appointmentCrudRepository.save(appointmentPersistenceModel);
-    // return AppointmentUtils.persistenceModelToAppointment(appointmentPersistenceModel);
-    return null;
-  }
-
-  @Override
-  public Appointment notAttended(UUID id) {
-    // AppointmentPersistenceModel appointmentPersistenceModel = this.appointmentCrudRepository.findById(id).orElse(null);
-    // Appointment appointment = AppointmentUtils.persistenceModelToAppointment(appointmentPersistenceModel);
-    // appointment.notAttended();
-    // appointmentPersistenceModel = AppointmentUtils.appointmentToPersistenceModel(appointment);
-    // this.appointmentCrudRepository.save(appointmentPersistenceModel);
-    // return AppointmentUtils.persistenceModelToAppointment(appointmentPersistenceModel);
-    return null;
-  }
-
-  @Override
-  public UUID attend(Appointment appointment) {
-    // AppointmentPersistenceModel persistenceModel = AppointmentUtils.appointmentToPersistenceModel(appointment);
-    // return this.appointmentCrudRepository.save(persistenceModel).getId();
-    return null;
-  }
-
-  
+  }  
 }
