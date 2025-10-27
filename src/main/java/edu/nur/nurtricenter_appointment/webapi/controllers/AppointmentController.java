@@ -40,10 +40,9 @@ public class AppointmentController {
     return command.execute(pipeline);
   }
 
-  @PatchMapping("/notattended/{id}")
-  public ResponseAppointmentDto notAttendedAppointment(@PathVariable String id) {
-    NotAttendedAppointmentCommand notAttendedAppointmentCommand = new NotAttendedAppointmentCommand(new ResponseAppointmentDto(id));
-    return notAttendedAppointmentCommand.execute(pipeline);
+  @PatchMapping("/notattended")
+  public ResultWithValue<Boolean> notAttendedAppointment(@RequestBody NotAttendedAppointmentCommand command) {
+    return command.execute(pipeline);
   }
 
   @PostMapping("/attend")
